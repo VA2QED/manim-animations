@@ -1,9 +1,11 @@
 #! /usr/bin/env python
 
-#using manimlib-0.1.11
+# using manimlib-0.1.11
 from manimlib.imports import *
 from math import *
-# I don't think that this import is mandatory. Pycharm doesn't recognize the constants defined in the manim dictionaries
+
+# I don't think that this import is mandatory. Pycharm doesn't recognize the
+# constants defined in the manim config dictionaries
 from pygments.styles.rainbow_dash import *
 
 # TODO: Make methods of declaring configurations to be consistent. 
@@ -40,15 +42,19 @@ class OpeningScene(GraphScene):
         self.play(ShowCreation(sinx_x_graph), Write(label), ShowCreation(undefined_point))
         self.wait(5)
 
-	# Here's something interesting: if you don't define x at 0 to be 1, manim will draw a spike at the point zero. Probably because python defines undefined values as a large number or something and manim smooths the graph out.
+# Here's something interesting: if you don't define x at 0 to be 1,
+# manim will draw a spike at the point zero. Probably because python
+# defines undefined values as a large number or something and manim smooths the graph out.
+
     def sinx_x_to_graph(self, x):
         if x == 0:
             return 1
         else:
             return sin(x) / x
 
-# TODO: Wouldn't it be cool if we can animate the angle theta to get smaller and smaller?
+
 class UnitCircle(GraphScene):
+    # TODO: Wouldn't it be cool if we can animate the angle theta to get smaller and smaller?
     CONFIG = {
         "x_min": -1.5,
         "x_axis_width": 6,
@@ -81,7 +87,7 @@ class UnitCircle(GraphScene):
         self.wait(3)
 
         sine_line = Line(
-            self.coords_to_point(sqrt(3)/2,0), self.coords_to_point(sqrt(3)/2, 1/2),
+            self.coords_to_point(sqrt(3)/2, 0), self.coords_to_point(sqrt(3)/2, 1/2),
             color=GREEN
         )
         sine_line_description = TextMobject(
@@ -93,7 +99,7 @@ class UnitCircle(GraphScene):
         self.play(ReplacementTransform(unit_circle_postulate, sine_line_description))
         self.wait(3)
 
-        unit_circle_arc = Arc(0, TAU/12, radius=self.coords_to_point(0,1)[1]).set_color(YELLOW).set_depth(-10)
+        unit_circle_arc = Arc(0, TAU/12, radius=self.coords_to_point(0, 1)[1]).set_color(YELLOW).set_depth(-10)
         unit_circle_arc_description = TextMobject("This arc has the \\\\ length of $\\theta$.")\
             .set_color(YELLOW)\
             .move_to(3*UP+3*LEFT)
@@ -105,11 +111,11 @@ class UnitCircle(GraphScene):
         self.wait(3)
 
         tangent_line = Line(
-            self.coords_to_point(1,0), self.coords_to_point(1, sqrt(3)/3),
+            self.coords_to_point(1, 0), self.coords_to_point(1, sqrt(3)/3),
             color=RED
             )
         triangle_tangent_line_extension = Line(
-            self.coords_to_point(sqrt(3)/2, 1/2), self.coords_to_point(1,sqrt(3)/3),
+            self.coords_to_point(sqrt(3)/2, 1/2), self.coords_to_point(1, sqrt(3)/3),
             color=GRAY
         )
         tangent_line_description = TextMobject("This line has the length \\\\ of $\\tan \\theta$",
@@ -121,8 +127,10 @@ class UnitCircle(GraphScene):
         self.play(Write(tangent_line_description))
         self.wait(4)
 
-# TODO: Add colours to each term to make it easier to identify what it is representing on the unit circle, or better yet, combine this scene to the unit circle scene.
+
 class Derivation(Scene):
+    # TODO: Add colours to each term to make it easier to identify what it is representing on the
+    #  unit circle, or better yet, combine this scene to the unit circle scene.
     def construct(self):
         inequality_description = TextMobject("As $\\theta$ approaches 0, the following inequality holds true:")
         starting_expression = TexMobject("\\sin \\theta \\leq \\theta \\leq \\tan \\theta")
@@ -134,14 +142,17 @@ class Derivation(Scene):
             TexMobject("1 \\geq \\lim_{\\theta \\to 0}\\frac{\\sin \\theta}{\\theta} \\geq 1"),
         ]
         squeeze_theorem = TexMobject("\\text{Therefore, by the squeeze theorem, }\\lim_{\\theta \\to 0} \\frac{\\sin \\theta}{\\theta}=1")
+
         self.play(Write(inequality_description))
         self.wait(5)
         self.play(VFadeOut(inequality_description))
         self.play(Write(starting_expression))
         self.wait(4)
+
         for expression in expressions:
             self.play(Transform(starting_expression, expression))
             self.wait(5)
+
         self.play(FadeOut(starting_expression))
         self.play(Write(squeeze_theorem))
         self.wait(3)
