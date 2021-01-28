@@ -9,3 +9,5 @@ or
 https://github.com/3b1b/manim
 
 depending on the the file that you wish to compile.
+
+Each file will indicate which version of manim is used as a comment.
