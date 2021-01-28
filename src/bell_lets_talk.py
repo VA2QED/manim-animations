@@ -15,6 +15,22 @@ Kids Help Phone contact information
 """
 
 
+# chances are i won't get sued for doing this but i'm adding it just in case
+class Unofficial(Scene):
+    def construct(self):
+        warning = Text("""
+        This video was made
+        in good faith to
+        start the conversation
+        on mental health. This video
+        IS NOT affiliated with or
+        endorsed by Bell Let's Talk.
+        """)
+        warning.set_color(BLACK)
+        self.play(Write(warning))
+        self.wait()
+
+
 class BellLetsTalk(Scene):
     def construct(self):
         Text1 = Text("""
@@ -75,8 +91,12 @@ class Resources(Scene):
         self.wait(2)
 
 
+# TODO: this is a bad way of concatenating the scenes because it doesn't actually instantiate each scene but
+#  rather passes everything as a function. Any pull requests on this would be appreciated
 class Everything(Scene):
     def construct(self):
+        Unofficial.construct(self)
+        self.clear()
         BellLetsTalk.construct(self)
         self.clear()
         Resources.construct(self)
